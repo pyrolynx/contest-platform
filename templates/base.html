@@ -1,0 +1,26 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Tochka Contest</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<div class="navbar navbar-dark bg-info shadow-sm">
+    <div class="container d-flex mr-auto justify-content-between">
+        <a href="/" class="navbar-brand"><strong>Contest</strong></a>
+        {% if request.user is not none %}
+        {% endif %}
+        <a href="/logout" class="btn btn-info ">Logout</a>
+    </div>
+</div>
+
+<section class="content">
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    {% if request.args.get('error') is not none %}
+        <div class="alert alert-danger">
+            <strong>Error!</strong> {{ request.args.get('error') }}
+        </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</section>

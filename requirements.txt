@@ -1,0 +1,6 @@
+flask
+pytest
+pysqlite3
+pathlib
+flask-session
+peewee

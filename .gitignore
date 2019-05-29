@@ -1,0 +1,8 @@
+.idea/
+venv/
+__pycache__/
+solutions/*
+!solutions/.gitkeep
+*.db
+
+.DS_Store
