@@ -2,10 +2,11 @@
 <title>{% block title %}{% endblock %} - Tochka Contest</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+<link rel="shortcut icon" href="https://tochka.com/favicon.png" type="image/x-icon" />
 <div class="navbar navbar-dark bg-info shadow-sm">
-    <div class="container d-flex mr-auto justify-content-between">
-        <a href="/" class="navbar-brand"><strong>Contest</strong></a>
+    <div class="container justify-content-between">
+        <a href="/" class="navbar-brand tesd-flex"><strong>Contest</strong></a>
+        <a href="/scoreboard" class="navbar-item text-light mr-auto ">Scoreboard</a>
         {% if request.user is not none %}
         {% endif %}
         <a href="/logout" class="btn btn-info ">Logout</a>
