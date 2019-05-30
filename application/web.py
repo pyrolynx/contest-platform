@@ -14,6 +14,7 @@ app.config['UPLOAD_FOLDER'] = config.SOLUTIONS_FOLDER
 def inject_user():
     return dict(user=getattr(flask.request, 'user', None))
 
+
 def require_auth(func):
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -60,6 +61,19 @@ def login():
 def logout():
     response = flask.redirect('/login')
     response.delete_cookie('session')
+    return response
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if flask.request.method == 'GET':
+        return flask.render_template('register.html')
+    try:
+        User.insert(token=flask.request.form['token'], username=flask.request.form['username']).execute()
+        response = flask.redirect('/')
+        response.set_cookie('session', flask.request.form['token'])
+    except Exception:
+        return flask.redirect('/register?error=Unknown error')
     return response
 
 
