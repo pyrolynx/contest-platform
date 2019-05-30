@@ -14,12 +14,12 @@ def run_test(solution_path: str, input: str, expected_output: str) -> Tuple[bool
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,)
     try:
-        out, err = process.communicate(input, 3.0)
+        out, err = process.communicate(input, config.TASK_TIMEOUT)
         if process.returncode != 0:
-            stderr = err.decode().split('\n')
+            stderr = err.decode().strip().split('\n')
             if not stderr:
                 return False, 'Runtime error'
-            log.error(process.returncode, stderr)
+            log.error(f'{process.returncode} {stderr}')
             return False, stderr[-1].split(':')[0]
     except subprocess.TimeoutExpired:
         process.kill()
@@ -32,6 +32,3 @@ def run_test(solution_path: str, input: str, expected_output: str) -> Tuple[bool
         log.error(f'{expected_output} {out.decode().strip()}')
         return False, 'Wrong Answer'
     return True, None
-
-# import os.path
-# print(run_test(os.path.abspath('../apb.py'), '3\n5', '8'))

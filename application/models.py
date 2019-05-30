@@ -7,7 +7,7 @@ from playhouse.sqlite_ext import JSONField, DateTimeField
 import config
 from application import runner
 
-sqlite_db = SqliteDatabase(str(config.PROJECT_DIR / 'contest.db'))
+sqlite_db = SqliteDatabase(str(config.DB_PATH))
 
 
 class BaseModel(Model):

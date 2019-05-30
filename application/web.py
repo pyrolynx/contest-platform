@@ -1,4 +1,5 @@
 import functools
+import json
 import logging
 
 import flask
@@ -98,9 +99,9 @@ def scoreboard(user):
                                  solutions=Solution.select().filter(user=user).order_by(Solution.submitted.desc()))
 
 
-Task.insert(id=0,name='A+B', description='Please calc a + b',
-            examples=[
-                {'input': '3\n5', 'output': '8'},
-                {'input': '0\n-2', 'output': '-2'}],
-            tests=[]).on_conflict('replace').execute()
+for file in (config.PROJECT_DIR / 'data' / 'tasks').iterdir():
+    if file.is_dir() or file.name.rsplit('.', 1)[-1] != 'json':
+        continue
+    Task.insert(json.loads(file.read_text())).on_conflict('replace').execute()
+
 app.run('0.0.0.0', debug=True)

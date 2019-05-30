@@ -1,8 +1,10 @@
 .idea/
 venv/
 __pycache__/
-solutions/*
-!solutions/.gitkeep
+data/solutions/*
+!data/solutions/.gitkeep
+data/tasks/*
+!data/tasks/aplusb.json
 *.db
 
 .DS_Store
