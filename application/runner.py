@@ -1,10 +1,10 @@
-import subprocess
-from typing import Tuple, Optional
 import logging
-
-log = logging.getLogger(__name__)
+import subprocess
+from typing import Optional, Tuple
 
 import config
+
+log = logging.getLogger(__name__)
 
 
 def run_test(solution_path: str, input: str, expected_output: str) -> Tuple[bool, Optional[str]]:

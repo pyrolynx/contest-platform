@@ -10,6 +10,7 @@ from application.models import Task, User, Solution
 app = flask.Flask(__name__, template_folder=config.TEMPLATES_DIR)
 app.config['UPLOAD_FOLDER'] = config.SOLUTIONS_FOLDER
 
+
 @app.context_processor
 def inject_user():
     return dict(user=getattr(flask.request, 'user', None))
@@ -99,7 +100,7 @@ def task_submit(task_id, user):
     if not flask.request.files:
         return flask.redirect(f'/task/{task_id}?error=No solutions found in attachments')
     solution = flask.request.files['solution']
-    if solution.content_type != 'text/x-python-script' or solution.filename.rsplit('.', 1)[-1].lower() != 'py':
+    if solution.filename.rsplit('.', 1)[-1].lower() != 'py':
         return flask.redirect(f'/task/{task_id}?error=Invalid content')
     solution = Solution.store(user, task, solution.read().decode())
     solution.run_tests()
@@ -109,8 +110,13 @@ def task_submit(task_id, user):
 @app.route('/scoreboard', methods=['GET'])
 @require_auth
 def scoreboard(user):
+    scope = flask.request.args.get('scope')
+    query = Solution.select()
+    if scope.lower() != 'global':
+        query = query.filter(user=user)
+
     return flask.render_template('scoreboard.html',
-                                 solutions=Solution.select().filter(user=user).order_by(Solution.submitted.desc()))
+                                 solutions=query.filter(user=user).order_by(Solution.submitted.desc()))
 
 
 for file in (config.PROJECT_DIR / 'data' / 'tasks').iterdir():

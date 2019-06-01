@@ -8,7 +8,7 @@ RUN pip3.7 install -r requirements.txt
 
 COPY . .
 
-VOLUME /opt/data
+RUN mkdir -p data/solutions && mkdir -p data/tasks
 
 EXPOSE 5000
 
