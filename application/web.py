@@ -110,13 +110,13 @@ def task_submit(task_id, user):
 @app.route('/scoreboard', methods=['GET'])
 @require_auth
 def scoreboard(user):
-    scope = flask.request.args.get('scope', '')
+    scope = flask.request.args.get('scope')
     query = Solution.select()
     if scope.lower() != 'global':
         query = query.filter(user=user)
 
     return flask.render_template('scoreboard.html',
-                                 solutions=query.filter(user=user).order_by(Solution.submitted.desc()))
+                                 solutions=query.order_by(Solution.submitted.desc()))
 
 
 for file in (config.PROJECT_DIR / 'data' / 'tasks').iterdir():
